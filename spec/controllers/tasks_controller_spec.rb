@@ -7,6 +7,9 @@ RSpec.describe TasksController, type: :controller do
 			task1 = FactoryBot.create(:task)
 			task2 = FactoryBot.create(:task)
 
+			#make change to task1
+			task1.update_attributes(title: "Something else")
+
 			#trigger the tasks#index action
 			get :index
 
@@ -14,8 +17,17 @@ RSpec.describe TasksController, type: :controller do
 			expect(response).to have_http_status :success
 
 			#access the actual reponse from the app using the instance vairable @response
+
 			response_value = ActiveSupport::JSON.decode(@response.body)
 			expect(response_value.count).to eq(2)
+
+			#remember, response+value is an JSON array of the tasks
+			response_ids = []
+			response_value.each do |task|
+				response_ids << task["id"]
+			end
+
+			expect(response_ids).to eq([task1.id, task2.id])
 		end
 	end
 
