@@ -1,6 +1,8 @@
 <section class="todoapp">
 	<header class="header">
-
+		<form id="new-form">
+			<input type="text" class="new-todo" />
+		</form>
 	</header>
 
 	<section class="main">
@@ -18,6 +20,13 @@
 <script>
 	$(function(){
 
+
+		$('#new-form').submit(function(event){
+			event.preventDefault();
+			var textbox = $('.new-todo');
+			console.log("Textbox: ", textbox.val());
+		});
+
 		//the taskhtml methos takes in a JS representation of the task and pproduces an HTML representation using <li> tags
 		function taskHtml(task){
 			var checkedStatus = task.done ? "checked" : "";
@@ -32,7 +41,7 @@
 
 		//toggleTask takes in an HTML representation of an event that fires from an HTML representation of the toggle checkbox,
 		//and performs an API request to toggle the value of the 'done' field
-		function toggleTasks(e){
+		function toggleTask(e){
 			var itemId = $(e.target).data("id");
 			var doneValue = Boolean($(e.target).is(':checked'));
 
