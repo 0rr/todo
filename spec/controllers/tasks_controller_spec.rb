@@ -40,4 +40,14 @@ RSpec.describe TasksController, type: :controller do
 			expect(task.done).to eq(true)
 		end
 	end
+
+	describe "tasks#create" do
+		it "should allow new tasks to be created" do
+			post :create, params: {task: {title: "Fix things"}}						# create a HTTP POST request to the TasksController #create action, with a task, with a title "Fix things"
+			expect(response).to have_http_status(:success)									# expect the HTTP response to be successful
+			response_value = ActiveSupport::JSON.decode(@response.body)		# parse the response as JSON
+			expect(response_value['title']).to eq("Fix things")						# ensure the title has been populated
+			expect(Task.last.title).to eq("Fix things")										# make sure the record is stored in the database
+		end
+	end
 end
