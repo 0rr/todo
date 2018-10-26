@@ -24,7 +24,15 @@
 		$('#new-form').submit(function(event){
 			event.preventDefault();
 			var textbox = $('.new-todo');
-			console.log("Textbox: ", textbox.val());
+			var payload = {
+				task: {
+					title: textbox.val() //build a variable that holds the task name entered in the form. This paylaod will be submitted to /tasks via HTTP POST request
+				}
+			};
+
+			$.post("/tasks", payload).success(function(data){
+				console.log("Successful HTTP Request.");
+			});
 		});
 
 		//the taskhtml methos takes in a JS representation of the task and pproduces an HTML representation using <li> tags
