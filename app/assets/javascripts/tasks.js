@@ -59,7 +59,8 @@
 				// console.log(htmlString);
 				var ulTodos = $('.todo-list');
 				ulTodos.append(htmlString);
-				$('.toggle').cahnge(toggleTask);
+				$('.toggle').click(toggleTask);
+				$('.new-todo').val('');
 			});
 		});
 
